@@ -15,8 +15,8 @@ from nltk import Tree
 # benepar.download('benepar_en3')
 
 import benepar, spacy
-#nlp_spacy = spacy.load('en_core_web_md')
-nlp_spacy = spacy.load('en')
+nlp_spacy = spacy.load('en_core_web_sm')
+#nlp_spacy = spacy.load('en')
 if spacy.__version__.startswith('2'):
     nlp_spacy.add_pipe(benepar.BeneparComponent("benepar_en3"))
 else:

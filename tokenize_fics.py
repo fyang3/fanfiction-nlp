@@ -6,10 +6,10 @@ import csv
 from multiprocessing import Pool
 import pdb
 
-nlp = spacy.load('en')
+nlp = spacy.load('en_core_web_sm')
 #data_dirpath = '/data/fanfiction_ao3/{0}/complete_en_1k-50k/fics'
 data_dirpath = 'example_fandom'
-input_format = 'csv'
+input_format = 'txt'
 csv.field_size_limit(sys.maxsize)
 
 
@@ -23,8 +23,8 @@ def tokenize_fics(fandom):
     for fname in tqdm(os.listdir(fandom_dirpath)):
         fpath = os.path.join(fandom_dirpath, fname)
 
-        if input_format == 'csv':
-
+        if input_format == 'csv': #currently just ignore
+            pass
             # pandas pretty much as fast
             #data = pd.read_csv(fpath)
             #data['text_tokenized'] = data['text'].map(tokenize)
@@ -51,16 +51,25 @@ def tokenize_fics(fandom):
                 writer = csv.writer(f)
                 writer.writerows(outlines)
 
-        else:
+        else: # for txt files
             with open(fpath) as file_obj:
                 sentences = file_obj.read().splitlines()
-                sent_toks = []
-                for sent in tqdm(sentences):
-                    sent_toks.append([tok.text for tok in nlp.tokenizer(sent.lower())])
+                headers = ['fic_id','chapter_id','para_id','text','text_tokenized']
+                data = [headers]
+                para_id = 0
+                for i in range(len(sentences)):
+                    if len(sentences[i])>2:
+                        entry = [1,29,para_id,sentences[i],tokenize(sentences[i])]
+                        #sent_toks.append([tok.text for tok in nlp.tokenizer(sent.lower())])
+                        data.append(entry)
+                        para_id += 1
 
-            with open(fpath + '.tokens', 'w') as wfile:
-                for sent_tok in sent_toks:
-                    wfile.write(' '.join(sent_tok) + '\n')
+            with open(fpath[:-4] + '.csv', 'w') as wfile:
+                #wfile.write(headers)
+                #for sent_tok in sent_toks:
+                csvwriter = csv.writer(wfile)
+                csvwriter.writerows(data)
+                    #wfile.write(' '.join(sent_tok) + '\n') # change to write 5 entries
 
 
 def main():
