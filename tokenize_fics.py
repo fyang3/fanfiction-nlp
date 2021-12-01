@@ -8,7 +8,7 @@ import pdb
 
 nlp = spacy.load('en_core_web_sm')
 #data_dirpath = '/data/fanfiction_ao3/{0}/complete_en_1k-50k/fics'
-data_dirpath = 'example_fandom'
+data_dirpath = 'sense_and_sensibility_test'
 input_format = 'txt'
 csv.field_size_limit(sys.maxsize)
 
@@ -85,7 +85,8 @@ def main():
     #    'drwho',
     #    'tolkien',
     #    'dragonage',
-    'example_fandom'
+    # 'example_fandom'
+    'sense_and_sensibility_test'
     ]
 
     #data_fpath = '/usr0/home/mamille2/erebor/fanfiction-project/data/ao3/{0}/ao3_{0}_sentences.txt'
@@ -101,3 +102,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+    #file_input_dir = sys.argv[1]
+    #tokenize_fics(file_input_dir)
+

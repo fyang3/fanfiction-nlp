@@ -1,0 +1,9 @@
+scipy
+pandas
+scikit-learn
+nltk
+spacy
+inflect
+pytorch
+benepar
+pyhocon
